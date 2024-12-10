@@ -1,8 +1,6 @@
 package com.example.demoShop.database.entity.dto.productDTO;
 
 import com.example.demoShop.database.entity.Category;
-import com.example.demoShop.database.entity.OrderItem;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,7 +9,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ProductCreateDTO {
+public class ProductCreateAndUpdateDTO {
 
     private String nameProduct;
 
@@ -20,6 +18,10 @@ public class ProductCreateDTO {
     private Integer quantity;
 
     private String description;
+
+    private String image;
+
+    private List<Category> category;
 
 
 }
