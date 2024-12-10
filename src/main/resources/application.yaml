@@ -3,9 +3,9 @@ server:
 spring:
   #SQl
   datasource:
-    url: jdbc:postgresql://localhost:5432/dbshop
+    url: jdbc:postgresql://localhost:5433/db_shop
     username: postgres
-    password: pass
+    password: postgres
     driver-class-name: org.postgresql.Driver
     #Hibernate
   jpa:

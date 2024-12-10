@@ -1,19 +1,18 @@
 package com.example.demoShop.database.service;
 
 import com.example.demoShop.database.entity.Product;
-import com.example.demoShop.database.entity.dto.productDTO.ProductCreateDTO;
+import com.example.demoShop.database.entity.dto.productDTO.ProductCreateAndUpdateDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
-    Product findByProductId(Long id);
+    ProductCreateAndUpdateDTO findByProductDTOId(Long id);
 
-    List<Product> findAllProducts();
+    List<ProductCreateAndUpdateDTO> findAllProducts();
 
-    Product createNewProduct(ProductCreateDTO productCreateDTO);
+    Product createNewProduct(ProductCreateAndUpdateDTO productCreateDTO);
 
-    Product updateProduct(Long id, Product product);
+    Product updateProduct(Long id, ProductCreateAndUpdateDTO updateProductDTO);
 
     void deleteProduct(Long id);
 }
