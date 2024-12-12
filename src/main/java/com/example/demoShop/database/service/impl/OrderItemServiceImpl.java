@@ -3,7 +3,6 @@ package com.example.demoShop.database.service.impl;
 
 import com.example.demoShop.database.entity.OrderItem;
 import com.example.demoShop.database.repository.OrderItemRepository;
-import com.example.demoShop.database.repository.OrderRepository;
 import com.example.demoShop.database.service.OrderItemService;
 
 import jakarta.persistence.EntityNotFoundException;

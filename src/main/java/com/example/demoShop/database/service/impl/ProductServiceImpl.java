@@ -6,12 +6,14 @@ import com.example.demoShop.database.repository.ProductRepository;
 import com.example.demoShop.database.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -20,8 +22,13 @@ public class ProductServiceImpl implements ProductService {
     private final ModelMapper modelMapper;
 
     private Product findByProductId(Long id) {
+        log.info("Запуск поиска продукта с ID: {}",id);
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Продукт с ID: %id не найден".formatted(id)));
+                .orElseThrow(() ->{
+                    log.warn("Продукт с ID: {} не найден",id);
+                return new EntityNotFoundException("Продукт с ID: %id не найден".formatted(id));
+                });
+        log.info("Завершение поиска продукта {} с ID: {}",product,id);
         return product;
     }
 
@@ -32,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<ProductCreateAndUpdateDTO> findAllProducts() {
+        log.info("Запуск метода выдачи списка всех продуктов");
         List<Product> products = productRepository.findAll();
         return products.stream()
                 .map(product -> modelMapper.map(product, ProductCreateAndUpdateDTO.class))
@@ -39,13 +47,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product createNewProduct(ProductCreateAndUpdateDTO productCreateDTO) {
+        log.info("Запуск метода по созданию нового продукта");
         Product product = modelMapper.map(productCreateDTO, Product.class);
+        log.info("Успешное создание нового продукта: {}",product);
         return productRepository.save(product);
     }
 
     public Product updateProduct(Long id, ProductCreateAndUpdateDTO updateProduct) {
-        var existingProduct = findByProductId(id);
+        log.info("Запуск метода по обновлению продукта");
+        Product existingProduct = findByProductId(id);
         updateExistingProduct(existingProduct, updateProduct);
+        log.info("Успешное обновление продукта: {}",existingProduct);
         return productRepository.save(existingProduct);
     }
 
@@ -66,6 +78,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void deleteProduct(Long id) {
+        log.info("Запуск метода по удалению устройства с ID: {}",id);
         productRepository.deleteById(id);
     }
 }
